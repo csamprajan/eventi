@@ -21,6 +21,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any | ResponseError>
 ) {
+  if (req.method === "OPTIONS") {
+    res.status(200).json({ message: "CORS preflight successful" });
+  } else {
   try {
     console.log("trying to print");
     console.log(req.body);
@@ -54,4 +57,5 @@ export default async function handler(
     res.status(500).json({ message: "Unable to get Iota credentials" });
     console.log(error);
   }
+}
 }

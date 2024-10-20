@@ -19,6 +19,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any | ResponseError>
 ) {
+  if (req.method === "OPTIONS") {
+    res.status(200).json({ message: "CORS preflight successful" });
+  } else {
   try {
     const { responseCode, configurationId, correlationId, transactionId } =
       responseSchema.parse(req.body);
@@ -48,4 +51,5 @@ export default async function handler(
       .status(statusCode)
       .json({ message: error.message, details: error?.details });
   }
+}
 }
